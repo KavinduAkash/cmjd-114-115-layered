@@ -6,6 +6,7 @@ package com.ijse.sg.controller;
 
 import com.ijse.sg.dao.CustomerDAO;
 import com.ijse.sg.dao.CustomerDAOImpl;
+import com.ijse.sg.dao.DAOFactory;
 import com.ijse.sg.db.DBConnection;
 import com.ijse.sg.dto.CustomerDTO;
 import com.ijse.sg.entity.CustomerEntity;
@@ -23,7 +24,8 @@ import java.util.List;
  */
 public class CustomerController {
     
-    private final CustomerDAO customerDAO = new CustomerDAOImpl();
+    DAOFactory df = new DAOFactory();
+    private final CustomerDAO customerDAO = (CustomerDAO)df.getDAO(DAOFactory.DAOTypes.CUSTOMER);
     
     public boolean saveCustomer(CustomerDTO dto) throws Exception {
         
