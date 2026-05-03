@@ -10,8 +10,17 @@ package com.ijse.sg.dao;
  */
 public class DAOFactory {
     
+    private static DAOFactory df;
+    
+    private DAOFactory() {
+    }
+    
     public static enum DAOTypes {
         CUSTOMER, ITEM // ORDER, ORDER_ITEM
+    }
+    
+    public static DAOFactory getInstance() {
+        return (df==null) ? df = new DAOFactory() : df;
     }
     
     public SuperDAO getDAO(DAOTypes type) {

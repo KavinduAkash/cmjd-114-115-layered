@@ -4,6 +4,7 @@
  */
 package com.ijse.sg.controller;
 
+import com.ijse.sg.dao.DAOFactory;
 import com.ijse.sg.dao.ItemDAO;
 import com.ijse.sg.dao.ItemDAOImpl;
 import com.ijse.sg.db.DBConnection;
@@ -22,7 +23,8 @@ import java.util.List;
  */
 public class ItemController {
     
-    private final ItemDAO itemDAO = new ItemDAOImpl();
+    private final ItemDAO itemDAO = (ItemDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
+   
     
     public boolean saveItem(ItemDTO dto) throws Exception {
         

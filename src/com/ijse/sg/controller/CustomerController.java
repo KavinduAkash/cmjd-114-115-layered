@@ -23,9 +23,8 @@ import java.util.List;
  * @author kavinduakash
  */
 public class CustomerController {
-    
-    DAOFactory df = new DAOFactory();
-    private final CustomerDAO customerDAO = (CustomerDAO)df.getDAO(DAOFactory.DAOTypes.CUSTOMER);
+   
+    private final CustomerDAO customerDAO = (CustomerDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CUSTOMER);
     
     public boolean saveCustomer(CustomerDTO dto) throws Exception {
         
