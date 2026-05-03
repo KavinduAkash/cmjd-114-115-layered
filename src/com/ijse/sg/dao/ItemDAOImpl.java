@@ -6,6 +6,7 @@ package com.ijse.sg.dao;
 
 import com.ijse.sg.db.DBConnection;
 import com.ijse.sg.dto.ItemDTO;
+import com.ijse.sg.entity.ItemEntity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class ItemDAOImpl {
     
-    public boolean save(ItemDTO dto) throws Exception {
+    public boolean save(ItemEntity entity) throws Exception {
             boolean rs = false;
         
             Connection conn = DBConnection.getInstance().getConnection();
@@ -30,10 +31,10 @@ public class ItemDAOImpl {
             
                 PreparedStatement stm = conn.prepareStatement(sql);
                 
-                stm.setInt(1, dto.getId());
-                stm.setString(2, dto.getName());
-                stm.setInt(3, dto.getQty());
-                stm.setDouble(4, dto.getPrice());
+                stm.setInt(1, entity.getId());
+                stm.setString(2, entity.getName());
+                stm.setInt(3, entity.getQty());
+                stm.setDouble(4, entity.getUnitPrice());
                 
                 int result = stm.executeUpdate();
                 
@@ -43,7 +44,7 @@ public class ItemDAOImpl {
             return rs;
     }
     
-    public boolean update(ItemDTO dto) throws Exception {
+    public boolean update(ItemEntity entity) throws Exception {
             boolean rs = false;
         
             Connection conn = DBConnection.getInstance().getConnection();
@@ -53,10 +54,10 @@ public class ItemDAOImpl {
             
                 PreparedStatement stm = conn.prepareStatement(sql);
                 
-                stm.setString(1, dto.getName());
-                stm.setInt(2, dto.getQty());
-                stm.setDouble(3, dto.getPrice());
-                stm.setInt(4, dto.getId());
+                stm.setString(1, entity.getName());
+                stm.setInt(2, entity.getQty());
+                stm.setDouble(3, entity.getUnitPrice());
+                stm.setInt(4, entity.getId());
                 
                 int result = stm.executeUpdate();
                 
@@ -86,8 +87,8 @@ public class ItemDAOImpl {
             return rs;
     }
     
-    public List<ItemDTO> getAll() throws Exception {
-            List<ItemDTO> dtos = new ArrayList<>();
+    public List<ItemEntity> getAll() throws Exception {
+            List<ItemEntity> entities = new ArrayList<>();
        
             Connection conn = DBConnection.getInstance().getConnection();
             
@@ -105,17 +106,17 @@ public class ItemDAOImpl {
                     int qty = result.getInt("qty");
                     double price = result.getDouble("unit_price");
                     
-                    ItemDTO dto = new ItemDTO(id, name, qty, price);
-                    dtos.add(dto);
+                    ItemEntity entity = new ItemEntity(id, name, qty, price);
+                    entities.add(entity);
                 }
                 
             }
         
-            return dtos;
+            return entities;
     }
     
-    public ItemDTO search(int id) throws Exception {
-            ItemDTO dto = null;
+    public ItemEntity search(int id) throws Exception {
+            ItemEntity entity = null;
         
             Connection conn = DBConnection.getInstance().getConnection();
             
@@ -135,12 +136,12 @@ public class ItemDAOImpl {
                     int qty = result.getInt("qty");
                     double price = result.getDouble("unit_price");
                     
-                    dto = new ItemDTO(itemId, name, qty, price);
+                    entity = new ItemEntity(id, name, qty, price);
                 }
                 
             }
         
-            return dto;
+            return entity;
     }
     
 }

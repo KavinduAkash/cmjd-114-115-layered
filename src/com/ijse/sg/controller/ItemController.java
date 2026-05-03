@@ -7,6 +7,7 @@ package com.ijse.sg.controller;
 import com.ijse.sg.dao.ItemDAOImpl;
 import com.ijse.sg.db.DBConnection;
 import com.ijse.sg.dto.ItemDTO;
+import com.ijse.sg.entity.ItemEntity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,25 +24,52 @@ public class ItemController {
     private final ItemDAOImpl itemDAO = new ItemDAOImpl();
     
     public boolean saveItem(ItemDTO dto) throws Exception {
-        return itemDAO.save(dto);
+        
+        ItemEntity entity = covertItemDTOToItemEntity(dto);
+        return itemDAO.save(entity);
+    
     }
     
     public boolean updateItem(ItemDTO dto) throws Exception {
-        return itemDAO.update(dto);
+        
+        ItemEntity entity = covertItemDTOToItemEntity(dto);
+        return itemDAO.update(entity);
+    
     }
     
     public boolean deleteItem(int id) throws Exception {
-       return itemDAO.delete(id);
+    
+        return itemDAO.delete(id);
+    
     }
     
     public List<ItemDTO> getItems() throws Exception {
-        List<ItemDTO> items = itemDAO.getAll();
-        return items;
+        
+        List<ItemEntity> items = itemDAO.getAll();
+        
+        List<ItemDTO> dtos = new ArrayList<>();
+        
+        for (ItemEntity item : items) {
+            dtos.add(covertItemEntityToItemDTO(item));
+        }
+        return dtos;
+        
     }
     
     public ItemDTO getItemDetails(int id) throws Exception {
-        ItemDTO item = itemDAO.search(id);
-        return item;
+
+        ItemEntity item = itemDAO.search(id);
+        ItemDTO dto = covertItemEntityToItemDTO(item);
+        return dto;
+        
+    }
+    
+    private ItemEntity covertItemDTOToItemEntity(ItemDTO dto) {
+        return new ItemEntity(dto.getId(), dto.getName(), dto.getQty(), dto.getPrice());
+    }
+    
+    private ItemDTO covertItemEntityToItemDTO(ItemEntity entity) {
+        return new ItemDTO(entity.getId(), entity.getName(), entity.getQty(), entity.getUnitPrice());
     }
     
 }
