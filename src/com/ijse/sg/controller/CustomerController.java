@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +26,20 @@ public class CustomerController {
             
             if(conn!=null) {
                 
-                String sql = "INSERT INTO customers(id, name, email, address) VALUES (" + dto.getId() + ", '" + dto.getName() + "', '"+ dto.getEmail() +"', '" + dto.getAddress() + "')";
+                // String sql = "INSERT INTO customers(id, name, email, address) VALUES (" + dto.getId() + ", '" + dto.getName() + "', '"+ dto.getEmail() +"', '" + dto.getAddress() + "')";
             
-                Statement stm = conn.createStatement();
+                String sql = "INSERT INTO customers(id, name, email, address) VALUES (?,?,?,?)";
                 
-                int result = stm.executeUpdate(sql);
+                // Statement stm = conn.createStatement();
+                
+                PreparedStatement stm = conn.prepareStatement(sql);
+                
+                stm.setInt(1 , dto.getId()); // (question_mark, value)
+                stm.setString(2, dto.getName());
+                stm.setString(3, dto.getEmail());
+                stm.setString(4, dto.getAddress());
+                
+                int result = stm.executeUpdate();
                
                 return result > 0;
             }
