@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author kavinduakash
  */
-public class CustomerDAOImpl implements CrudDAO<CustomerEntity> {
+public class CustomerDAOImpl implements CustomerDAO {
     
     @Override
     public boolean save(CustomerEntity entity) throws Exception {

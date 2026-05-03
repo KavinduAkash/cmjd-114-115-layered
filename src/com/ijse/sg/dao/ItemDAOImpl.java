@@ -18,8 +18,9 @@ import java.util.List;
  *
  * @author kavinduakash
  */
-public class ItemDAOImpl implements CrudDAO<ItemEntity> {
+public class ItemDAOImpl implements ItemDAO {
     
+    @Override
     public boolean save(ItemEntity entity) throws Exception {
             boolean rs = false;
         
@@ -44,6 +45,7 @@ public class ItemDAOImpl implements CrudDAO<ItemEntity> {
             return rs;
     }
     
+    @Override
     public boolean update(ItemEntity entity) throws Exception {
             boolean rs = false;
         
@@ -67,6 +69,7 @@ public class ItemDAOImpl implements CrudDAO<ItemEntity> {
             return rs;
     }
     
+    @Override
     public boolean delete(int id) throws Exception {
             boolean rs = false;
             
@@ -87,6 +90,7 @@ public class ItemDAOImpl implements CrudDAO<ItemEntity> {
             return rs;
     }
     
+    @Override
     public List<ItemEntity> getAll() throws Exception {
             List<ItemEntity> entities = new ArrayList<>();
        
@@ -115,6 +119,7 @@ public class ItemDAOImpl implements CrudDAO<ItemEntity> {
             return entities;
     }
     
+    @Override
     public ItemEntity search(int id) throws Exception {
             ItemEntity entity = null;
         
