@@ -7,6 +7,7 @@ package com.ijse.sg.controller;
 import com.ijse.sg.dao.CustomerDAOImpl;
 import com.ijse.sg.db.DBConnection;
 import com.ijse.sg.dto.CustomerDTO;
+import com.ijse.sg.entity.CustomerEntity;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,13 +25,17 @@ public class CustomerController {
     private final CustomerDAOImpl customerDAO = new CustomerDAOImpl();
     
     public boolean saveCustomer(CustomerDTO dto) throws Exception {
-            boolean result = customerDAO.save(dto);
+        
+            CustomerEntity customerEntity = convertCustomerDTOToCustomerEntity(dto);
+            boolean result = customerDAO.save(customerEntity);
             return result;
+    
     }
     
     public boolean updateCustomer(CustomerDTO dto) throws Exception {
-        
-            boolean result = customerDAO.update(dto);
+            
+            CustomerEntity customerEntity = convertCustomerDTOToCustomerEntity(dto);
+            boolean result = customerDAO.update(customerEntity);
             return result;
             
     }
@@ -44,8 +49,31 @@ public class CustomerController {
     
     public List<CustomerDTO> getCustomers() throws Exception {
                
-        List<CustomerDTO> customers = customerDAO.getAll();
-        return customers;
+        List<CustomerEntity> customers = customerDAO.getAll();
+        
+        List<CustomerDTO> dtos = new ArrayList<>();
+        
+        for (CustomerEntity customer : customers) {
+            CustomerDTO dto = convertCustomerEntityToCustomerDTO(customer);
+            dtos.add(dto);
+        }
+        
+        return dtos;
+        
+    }
+    
+    private CustomerEntity convertCustomerDTOToCustomerEntity(CustomerDTO dto) {
+        
+        CustomerEntity customerEntity = new CustomerEntity(dto.getId(), dto.getName(), dto.getEmail(), dto.getAddress());
+        return customerEntity;
+        
+    }
+    
+    private CustomerDTO convertCustomerEntityToCustomerDTO(CustomerEntity entity) {
+        
+        CustomerDTO customerEntity = new CustomerDTO(entity.getId(), entity.getName(), entity.getEmail(), entity.getAddress());
+        return customerEntity;
+        
     }
     
 }

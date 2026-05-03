@@ -6,6 +6,7 @@ package com.ijse.sg.dao;
 
 import com.ijse.sg.db.DBConnection;
 import com.ijse.sg.dto.CustomerDTO;
+import com.ijse.sg.entity.CustomerEntity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class CustomerDAOImpl {
     
-    public boolean save(CustomerDTO dto) throws Exception {
+    public boolean save(CustomerEntity entity) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
             
             if(conn!=null) {
@@ -28,10 +29,10 @@ public class CustomerDAOImpl {
                 
                 PreparedStatement stm = conn.prepareStatement(sql);
                 
-                stm.setInt(1 , dto.getId()); // (question_mark, value)
-                stm.setString(2, dto.getName());
-                stm.setString(3, dto.getEmail());
-                stm.setString(4, dto.getAddress());
+                stm.setInt(1 , entity.getId()); // (question_mark, value)
+                stm.setString(2, entity.getName());
+                stm.setString(3, entity.getEmail());
+                stm.setString(4, entity.getAddress());
 
                 int result = stm.executeUpdate();
                
@@ -41,7 +42,7 @@ public class CustomerDAOImpl {
             return false;
     }
     
-    public boolean update(CustomerDTO dto) throws Exception {
+    public boolean update(CustomerEntity entity) throws Exception {
             boolean rs = false;
 
             Connection conn = DBConnection.getInstance().getConnection();
@@ -52,10 +53,10 @@ public class CustomerDAOImpl {
             
                 PreparedStatement stm = conn.prepareStatement(sql);
                 
-                stm.setString(1, dto.getName());
-                stm.setString(2, dto.getEmail());
-                stm.setString(3, dto.getAddress());
-                stm.setInt(4, dto.getId());
+                stm.setString(1, entity.getName());
+                stm.setString(2, entity.getEmail());
+                stm.setString(3, entity.getAddress());
+                stm.setInt(4, entity.getId());
                 
                 int result = stm.executeUpdate();
                 
@@ -88,8 +89,10 @@ public class CustomerDAOImpl {
             return rs;
     }
     
-    public List<CustomerDTO> getAll() throws Exception {
-            List<CustomerDTO> dtos = new ArrayList<>();
+    public List<CustomerEntity> getAll() throws Exception {
+            
+            List<CustomerEntity> entities = new ArrayList<>();
+            
             Connection conn = DBConnection.getInstance().getConnection();
             
             if(conn!=null) {
@@ -106,12 +109,12 @@ public class CustomerDAOImpl {
                     String email = result.getString("email");
                     String address = result.getString("address");
                     
-                    CustomerDTO cdto = new CustomerDTO(id, name, email, address);
-                    dtos.add(cdto);
+                    CustomerEntity entity = new CustomerEntity(id, name, email, address);
+                    entities.add(entity);
                 }
             }
         
-            return dtos;
+            return entities;
             
     }
     
