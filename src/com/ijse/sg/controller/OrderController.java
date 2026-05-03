@@ -8,6 +8,7 @@ import com.ijse.sg.db.DBConnection;
 import com.ijse.sg.dto.OrderDTO;
 import com.ijse.sg.dto.OrderItemDTO;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,11 +29,13 @@ public class OrderController {
            
             conn.setAutoCommit(false);
             
-            String sql = "INSERT INTO orders(customer_id) VALUES (" + order.getCustomerId() + ")";
+            String sql = "INSERT INTO orders(customer_id) VALUES (?)";
            
-            Statement stm = conn.createStatement();
+            PreparedStatement stm = conn.prepareStatement(sql);
                 
-            int result1 = stm.executeUpdate(sql);
+            stm.setInt(1, order.getCustomerId());
+                
+            int result1 = stm.executeUpdate();
                 
             if(result1 > 0) {
                 sql = "SELECT * FROM customers ORDER BY id DESC LIMIT 1";
@@ -64,11 +67,17 @@ public class OrderController {
            
             for (OrderItemDTO orderItemDTO : order.getOrderItemList()) {
              
-                String sql = "INSERT INTO order_items(order_id, item_id, unit_price, qty, total_price) VALUES (" + order.getOrderId() + ", " + orderItemDTO.getItemId() + ", " + orderItemDTO.getUnitPrice() + ", " + orderItemDTO.getQty() + ", " + (orderItemDTO.getUnitPrice() * orderItemDTO.getQty()) +  ")";
+                String sql = "INSERT INTO order_items(order_id, item_id, unit_price, qty, total_price) VALUES (?, ?, ?, ?, ?)";
            
-                Statement stm = conn.createStatement();
+                PreparedStatement stm = conn.prepareStatement(sql);
+                
+                stm.setInt(1, order.getOrderId());
+                stm.setInt(2, orderItemDTO.getItemId());
+                stm.setDouble(3, orderItemDTO.getUnitPrice());
+                stm.setInt(4, orderItemDTO.getQty());
+                stm.setDouble(5, orderItemDTO.getUnitPrice()*orderItemDTO.getQty());
 
-                int result = stm.executeUpdate(sql); 
+                int result = stm.executeUpdate(); 
                 
                 if(result <= 0) {
                     throw new SQLException();

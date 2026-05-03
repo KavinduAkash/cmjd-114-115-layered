@@ -59,13 +59,17 @@ public class CustomerController {
             Connection conn = DBConnection.getInstance().getConnection();
             
             if(conn!=null) {
-                System.out.println("Connected!!!");
                 
-                String sql = "UPDATE customers SET name='" + dto.getName() + "', email='" + dto.getEmail() + "', address='" + dto.getAddress() + "' WHERE id=" + dto.getId();
+                String sql = "UPDATE customers SET name=?, email=?, address=? WHERE id=?";
             
-                Statement stm = conn.createStatement();
+                PreparedStatement stm = conn.prepareStatement(sql);
                 
-                int result = stm.executeUpdate(sql);
+                stm.setString(1, dto.getName());
+                stm.setString(2, dto.getEmail());
+                stm.setString(3, dto.getAddress());
+                stm.setInt(4, dto.getId());
+                
+                int result = stm.executeUpdate();
                 
                 rs = result > 0;
             }
@@ -81,13 +85,15 @@ public class CustomerController {
             Connection conn = DBConnection.getInstance().getConnection();
             
             if(conn!=null) {
-                System.out.println("Connected!!!");
+               
                 
-                String sql = "DELETE FROM customers WHERE id=" + id;
-            
-                Statement stm = conn.createStatement();
+                String sql = "DELETE FROM customers WHERE id=?";
                 
-                int result = stm.executeUpdate(sql);
+                PreparedStatement stm = conn.prepareStatement(sql);
+                
+                stm.setInt(1, id);
+                
+                int result = stm.executeUpdate();
                 
                 rs = result > 0;
                 

@@ -7,6 +7,7 @@ package com.ijse.sg.controller;
 import com.ijse.sg.db.DBConnection;
 import com.ijse.sg.dto.ItemDTO;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -25,11 +26,16 @@ public class ItemController {
             
             if(conn!=null) {
                 
-                String sql = "INSERT INTO items(id, name, qty, unit_price) VALUES (" + dto.getId() + ", '" + dto.getName() + "', "+ dto.getQty() +", " + dto.getPrice() + ")";
+                String sql = "INSERT INTO items(id, name, qty, unit_price) VALUES (?,?,?,?)";
             
-                Statement stm = conn.createStatement();
+                PreparedStatement stm = conn.prepareStatement(sql);
                 
-                int result = stm.executeUpdate(sql);
+                stm.setInt(1, dto.getId());
+                stm.setString(2, dto.getName());
+                stm.setInt(3, dto.getQty());
+                stm.setDouble(4, dto.getPrice());
+                
+                int result = stm.executeUpdate();
                 
                 rs = result > 0;
             }
@@ -43,11 +49,16 @@ public class ItemController {
             Connection conn = DBConnection.getInstance().getConnection();
             
             if(conn!=null) {
-                String sql = "UPDATE items SET name='" + dto.getName() + "', qty=" + dto.getQty() + ", unit_price='" + dto.getPrice() + "' WHERE id=" + dto.getId();
+                String sql = "UPDATE items SET name=?, qty=?, unit_price=? WHERE id=?";
             
-                Statement stm = conn.createStatement();
+                PreparedStatement stm = conn.prepareStatement(sql);
                 
-                int result = stm.executeUpdate(sql);
+                stm.setString(1, dto.getName());
+                stm.setInt(2, dto.getQty());
+                stm.setDouble(3, dto.getPrice());
+                stm.setInt(4, dto.getId());
+                
+                int result = stm.executeUpdate();
                 
                 rs = result > 0;
             }
@@ -61,11 +72,13 @@ public class ItemController {
             Connection conn = DBConnection.getInstance().getConnection();
             
             if(conn!=null) {
-                String sql = "DELETE FROM items WHERE id=" + id;
+                String sql = "DELETE FROM items WHERE id=?";
             
-                Statement stm = conn.createStatement();
+                PreparedStatement stm = conn.prepareStatement(sql);
                 
-                int result = stm.executeUpdate(sql);
+                stm.setInt(1, id);
+                
+                int result = stm.executeUpdate();
                 
                 rs = result > 0;
             }
@@ -108,11 +121,13 @@ public class ItemController {
             
             if(conn!=null) {
                 
-                String sql = "SELECT * FROM items WHERE id=" + id;
+                String sql = "SELECT * FROM items WHERE id=?";
                 
-                Statement stm = conn.createStatement();
+                PreparedStatement stm = conn.prepareStatement(sql);
                 
-                ResultSet result = stm.executeQuery(sql);
+                stm.setInt(1, id);
+                
+                ResultSet result = stm.executeQuery();
             
                 while(result.next()) {
                     int itemId = result.getInt("id");
