@@ -4,6 +4,7 @@
  */
 package com.ijse.sg.controller;
 
+import com.ijse.sg.dao.CustomerDAO;
 import com.ijse.sg.dao.CustomerDAOImpl;
 import com.ijse.sg.db.DBConnection;
 import com.ijse.sg.dto.CustomerDTO;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class CustomerController {
     
-    private final CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+    private final CustomerDAO customerDAO = new CustomerDAOImpl();
     
     public boolean saveCustomer(CustomerDTO dto) throws Exception {
         
