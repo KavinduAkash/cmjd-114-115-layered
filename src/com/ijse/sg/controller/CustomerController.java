@@ -26,11 +26,14 @@ public class CustomerController {
             
             if(conn!=null) {
                 
+                // ==================== Statements ======================
                 // String sql = "INSERT INTO customers(id, name, email, address) VALUES (" + dto.getId() + ", '" + dto.getName() + "', '"+ dto.getEmail() +"', '" + dto.getAddress() + "')";
-            
-                String sql = "INSERT INTO customers(id, name, email, address) VALUES (?,?,?,?)";
-                
                 // Statement stm = conn.createStatement();
+                // int result = stm.executeUpdate(sql);
+                // ==================== Statements ======================
+                
+                // ==================== Prepared Statements ======================
+                String sql = "INSERT INTO customers(id, name, email, address) VALUES (?,?,?,?)";
                 
                 PreparedStatement stm = conn.prepareStatement(sql);
                 
@@ -38,8 +41,9 @@ public class CustomerController {
                 stm.setString(2, dto.getName());
                 stm.setString(3, dto.getEmail());
                 stm.setString(4, dto.getAddress());
-                
+
                 int result = stm.executeUpdate();
+                // ==================== Prepared Statements ======================
                
                 return result > 0;
             }
