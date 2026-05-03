@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author kavinduakash
  */
-public class ItemDAOImpl {
+public class ItemDAOImpl implements CrudDAO<ItemEntity> {
     
     public boolean save(ItemEntity entity) throws Exception {
             boolean rs = false;

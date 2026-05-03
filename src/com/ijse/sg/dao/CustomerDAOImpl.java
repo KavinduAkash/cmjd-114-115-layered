@@ -18,8 +18,9 @@ import java.util.List;
  *
  * @author kavinduakash
  */
-public class CustomerDAOImpl {
+public class CustomerDAOImpl implements CrudDAO<CustomerEntity> {
     
+    @Override
     public boolean save(CustomerEntity entity) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
             
@@ -42,6 +43,7 @@ public class CustomerDAOImpl {
             return false;
     }
     
+    @Override
     public boolean update(CustomerEntity entity) throws Exception {
             boolean rs = false;
 
@@ -66,6 +68,7 @@ public class CustomerDAOImpl {
             return rs;
     }
     
+    @Override
     public boolean delete(int id) throws Exception {
             boolean rs = false;
         
@@ -89,6 +92,7 @@ public class CustomerDAOImpl {
             return rs;
     }
     
+    @Override
     public List<CustomerEntity> getAll() throws Exception {
             
             List<CustomerEntity> entities = new ArrayList<>();
