@@ -16,4 +16,5 @@ public interface ItemBO {
     public boolean updateItem(ItemDTO dto) throws Exception;
     public boolean deleteItem(int id) throws Exception;
     public List<ItemDTO> getItems() throws Exception;
+    public ItemDTO getItemDetails(int id) throws Exception;
 }
