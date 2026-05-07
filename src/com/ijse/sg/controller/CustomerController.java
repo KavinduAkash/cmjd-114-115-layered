@@ -4,6 +4,7 @@
  */
 package com.ijse.sg.controller;
 
+import com.ijse.sg.bo.CustomerBO;
 import com.ijse.sg.bo.CustomerBOImpl;
 import com.ijse.sg.dao.custom.CustomerDAO;
 import com.ijse.sg.dao.custom.impl.CustomerDAOImpl;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 public class CustomerController {
    
-    CustomerBOImpl customerBO = new CustomerBOImpl();
+    CustomerBO customerBO = new CustomerBOImpl();
     
     public boolean saveCustomer(CustomerDTO dto) throws Exception {
         

@@ -15,27 +15,31 @@ import java.util.List;
  *
  * @author kavinduakash
  */
-public class CustomerBOImpl {
+public class CustomerBOImpl implements CustomerBO {
     
     private final CustomerDAO customerDAO = (CustomerDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CUSTOMER);
     
+    @Override
     public boolean saveCustomer(CustomerDTO dto) throws Exception {
             CustomerEntity customerEntity = convertCustomerDTOToCustomerEntity(dto);
             boolean result = customerDAO.save(customerEntity);
             return result;
     }
     
+    @Override
     public boolean updateCustomer(CustomerDTO dto) throws Exception {
             CustomerEntity customerEntity = convertCustomerDTOToCustomerEntity(dto);
             boolean result = customerDAO.update(customerEntity);
             return result;
     }
     
+    @Override
     public boolean deleteCustomer(int id) throws Exception {
         boolean result = customerDAO.delete(id);
         return result;
     }
     
+    @Override
     public List<CustomerDTO> getAllCustomers() throws Exception {
          List<CustomerEntity> customers = customerDAO.getAll();
         
