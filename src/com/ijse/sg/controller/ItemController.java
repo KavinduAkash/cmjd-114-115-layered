@@ -4,6 +4,8 @@
  */
 package com.ijse.sg.controller;
 
+import com.ijse.sg.bo.ItemBO;
+import com.ijse.sg.bo.ItemBOImpl;
 import com.ijse.sg.dao.DAOFactory;
 import com.ijse.sg.dao.custom.ItemDAO;
 import com.ijse.sg.dao.custom.impl.ItemDAOImpl;
@@ -23,56 +25,42 @@ import java.util.List;
  */
 public class ItemController {
     
-    private final ItemDAO itemDAO = (ItemDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
+    ItemBO itemBO = new ItemBOImpl();
    
     
     public boolean saveItem(ItemDTO dto) throws Exception {
         
-        ItemEntity entity = covertItemDTOToItemEntity(dto);
-        return itemDAO.save(entity);
+       boolean result = itemBO.saveItem(dto);
+       return result;
     
     }
     
     public boolean updateItem(ItemDTO dto) throws Exception {
         
-        ItemEntity entity = covertItemDTOToItemEntity(dto);
-        return itemDAO.update(entity);
+        boolean result = itemBO.updateItem(dto);
+       return result;
     
     }
     
     public boolean deleteItem(int id) throws Exception {
     
-        return itemDAO.delete(id);
+        boolean result = itemBO.deleteItem(id);
+       return result;
     
     }
     
     public List<ItemDTO> getItems() throws Exception {
         
-        List<ItemEntity> items = itemDAO.getAll();
-        
-        List<ItemDTO> dtos = new ArrayList<>();
-        
-        for (ItemEntity item : items) {
-            dtos.add(covertItemEntityToItemDTO(item));
-        }
-        return dtos;
+       List<ItemDTO> result = itemBO.getItems();
+       return result;
         
     }
     
     public ItemDTO getItemDetails(int id) throws Exception {
 
-        ItemEntity item = itemDAO.search(id);
-        ItemDTO dto = covertItemEntityToItemDTO(item);
-        return dto;
+       ItemDTO result = itemBO.getItemDetails(id);
+       return result;
         
-    }
-    
-    private ItemEntity covertItemDTOToItemEntity(ItemDTO dto) {
-        return new ItemEntity(dto.getId(), dto.getName(), dto.getQty(), dto.getPrice());
-    }
-    
-    private ItemDTO covertItemEntityToItemDTO(ItemEntity entity) {
-        return new ItemDTO(entity.getId(), entity.getName(), entity.getQty(), entity.getUnitPrice());
     }
     
 }
