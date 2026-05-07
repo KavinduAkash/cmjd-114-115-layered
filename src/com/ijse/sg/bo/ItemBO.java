@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author kavinduakash
  */
-public interface ItemBO {
+public interface ItemBO extends SuperBO {
     public boolean saveItem(ItemDTO dto) throws Exception;
     public boolean updateItem(ItemDTO dto) throws Exception;
     public boolean deleteItem(int id) throws Exception;

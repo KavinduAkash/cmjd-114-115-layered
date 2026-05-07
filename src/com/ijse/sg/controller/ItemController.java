@@ -4,6 +4,8 @@
  */
 package com.ijse.sg.controller;
 
+import com.ijse.sg.bo.BOFactory;
+import com.ijse.sg.bo.CustomerBO;
 import com.ijse.sg.bo.ItemBO;
 import com.ijse.sg.bo.ItemBOImpl;
 import com.ijse.sg.dao.DAOFactory;
@@ -25,7 +27,7 @@ import java.util.List;
  */
 public class ItemController {
     
-    ItemBO itemBO = new ItemBOImpl();
+    ItemBO itemBO = (ItemBO)BOFactory.getInstance().getBO(BOFactory.BOTypes.ITEM);
    
     
     public boolean saveItem(ItemDTO dto) throws Exception {
