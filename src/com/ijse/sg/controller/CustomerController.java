@@ -4,8 +4,8 @@
  */
 package com.ijse.sg.controller;
 
-import com.ijse.sg.dao.CustomerDAO;
-import com.ijse.sg.dao.CustomerDAOImpl;
+import com.ijse.sg.dao.custom.CustomerDAO;
+import com.ijse.sg.dao.custom.impl.CustomerDAOImpl;
 import com.ijse.sg.dao.DAOFactory;
 import com.ijse.sg.db.DBConnection;
 import com.ijse.sg.dto.CustomerDTO;

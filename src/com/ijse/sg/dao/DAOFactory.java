@@ -4,6 +4,9 @@
  */
 package com.ijse.sg.dao;
 
+import com.ijse.sg.dao.custom.impl.ItemDAOImpl;
+import com.ijse.sg.dao.custom.impl.CustomerDAOImpl;
+
 /**
  *
  * @author kavinduakash

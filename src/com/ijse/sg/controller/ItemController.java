@@ -5,8 +5,8 @@
 package com.ijse.sg.controller;
 
 import com.ijse.sg.dao.DAOFactory;
-import com.ijse.sg.dao.ItemDAO;
-import com.ijse.sg.dao.ItemDAOImpl;
+import com.ijse.sg.dao.custom.ItemDAO;
+import com.ijse.sg.dao.custom.impl.ItemDAOImpl;
 import com.ijse.sg.db.DBConnection;
 import com.ijse.sg.dto.ItemDTO;
 import com.ijse.sg.entity.ItemEntity;
