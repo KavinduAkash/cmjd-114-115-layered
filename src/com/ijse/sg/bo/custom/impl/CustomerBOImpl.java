@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.ijse.sg.bo;
+package com.ijse.sg.bo.custom.impl;
 
+import com.ijse.sg.bo.custom.CustomerBO;
 import com.ijse.sg.dao.DAOFactory;
 import com.ijse.sg.dao.custom.CustomerDAO;
 import com.ijse.sg.dto.CustomerDTO;

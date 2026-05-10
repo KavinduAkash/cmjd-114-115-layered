@@ -4,6 +4,8 @@
  */
 package com.ijse.sg.bo;
 
+import com.ijse.sg.bo.custom.impl.ItemBOImpl;
+import com.ijse.sg.bo.custom.impl.CustomerBOImpl;
 import com.ijse.sg.dao.DAOFactory;
 import com.ijse.sg.dao.SuperDAO;
 import com.ijse.sg.dao.custom.impl.CustomerDAOImpl;

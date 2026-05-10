@@ -5,8 +5,8 @@
 package com.ijse.sg.controller;
 
 import com.ijse.sg.bo.BOFactory;
-import com.ijse.sg.bo.CustomerBO;
-import com.ijse.sg.bo.CustomerBOImpl;
+import com.ijse.sg.bo.custom.CustomerBO;
+import com.ijse.sg.bo.custom.impl.CustomerBOImpl;
 import com.ijse.sg.dao.custom.CustomerDAO;
 import com.ijse.sg.dao.custom.impl.CustomerDAOImpl;
 import com.ijse.sg.dao.DAOFactory;
