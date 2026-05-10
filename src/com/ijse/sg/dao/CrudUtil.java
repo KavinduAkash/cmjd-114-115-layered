@@ -17,11 +17,9 @@ import java.sql.SQLException;
  */
 public class CrudUtil {
     
-    public static boolean executeUpdate(String sql, Object...values) throws SQLException {
-        Connection conn = DBConnection.getInstance().getConnection();
-        
-        if(conn!=null) {
-        
+    private static PreparedStatement getPreparedStatement(String sql, Object...values) throws SQLException {
+            Connection conn = DBConnection.getInstance().getConnection();
+            
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i = 0;
@@ -30,35 +28,23 @@ public class CrudUtil {
                 pstm.setObject(i, value);
             }
             
-            int result = pstm.executeUpdate();
-            
-            return result>0;
-
-        }
+            return pstm;
+    }
+    
+    public static boolean executeUpdate(String sql, Object...values) throws SQLException {
         
-        return false;
+        PreparedStatement pstm = getPreparedStatement(sql, values);
+        int result = pstm.executeUpdate();
+        return result>0;
+        
     }
     
     public static ResultSet executeQuery(String sql, Object...values) throws SQLException {
-        Connection conn = DBConnection.getInstance().getConnection();
-        
-        if(conn!=null) {
-        
-            PreparedStatement pstm = conn.prepareStatement(sql);
-            
-            int i = 0;
-            for (Object value : values) {
-                ++i;
-                pstm.setObject(i, value);
-            }
-            
+       
+            PreparedStatement pstm = getPreparedStatement(sql, values);
             ResultSet result = pstm.executeQuery();
-            
             return result;
-
-        }
-        
-        return null;
+            
     }
     
 }
