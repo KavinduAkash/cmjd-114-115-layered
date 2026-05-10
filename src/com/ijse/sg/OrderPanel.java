@@ -325,7 +325,7 @@ public class OrderPanel extends javax.swing.JPanel {
 
             for(int i=0; i<rowCount; i++) {
                 int itemId = (Integer)orderCartTbl.getValueAt(i, 0); // (row_index, column_index)
-                int qty = (Integer)orderCartTbl.getValueAt(i, 2); // (row_index, column_index)
+                int qty = Integer.parseInt(orderCartTbl.getValueAt(i, 2).toString()); // (row_index, column_index)
                 double price = (Double)orderCartTbl.getValueAt(i, 3); // (row_index, column_index)
 
                 OrderItemDTO oid = new OrderItemDTO(itemId, price, qty);
@@ -342,6 +342,7 @@ public class OrderPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Something went wrong!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch(Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Something went wrong!", "Error", JOptionPane.ERROR_MESSAGE); 
         }
     }//GEN-LAST:event_placeOrderBtnActionPerformed
@@ -428,6 +429,7 @@ public class OrderPanel extends javax.swing.JPanel {
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel)orderCartTbl.getModel(); 
         model.setRowCount(0);
         total = 0.0;
+        totalLbl.setText(total + "");
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

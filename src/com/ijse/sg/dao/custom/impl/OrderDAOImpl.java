@@ -14,6 +14,7 @@ import com.ijse.sg.entity.OrderEntity;
 import com.ijse.sg.entity.OrderItemEntity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -44,18 +45,20 @@ public class OrderDAOImpl implements OrderDAO {
             
             String sql = "INSERT INTO orders(customer_id) VALUES (?)";
            
-            PreparedStatement stm = conn.prepareStatement(sql);
+            PreparedStatement stm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 
             stm.setInt(1, entity.getCustomerId());
                 
             int result1 = stm.executeUpdate();
-                
+            
             if(result1 > 0) {
-                sql = "SELECT * FROM customers ORDER BY id DESC LIMIT 1";
-                ResultSet result2 = stm.executeQuery(sql);
-
+//                sql = "SELECT * FROM customers ORDER BY id DESC LIMIT 1";
+//                ResultSet result2 = stm.executeQuery(sql);
+                
+                ResultSet result2 = stm.getGeneratedKeys();
                 while(result2.next()) {
-                    int orderId = result2.getInt("id");
+//                    int orderId = result2.getInt("id");
+                    int orderId = result2.getInt(1);
                     rs = this.placeOrderItems(orderItemEntites, orderId);
                     if(rs) {
                         conn.commit();
@@ -64,6 +67,7 @@ public class OrderDAOImpl implements OrderDAO {
             }
             
         } catch(Exception e) {
+            e.printStackTrace();
             conn.rollback();
         } finally {
             conn.setAutoCommit(true);
@@ -88,14 +92,16 @@ public class OrderDAOImpl implements OrderDAO {
     }
     
     private boolean placeOrderItems(List<OrderItemEntity> orderItemEntites, int orderId) throws Exception {
-            boolean rs = false;
+            
+            System.out.println("----------------> orderItemEntites list: " + orderItemEntites.size());
         
             for (OrderItemEntity orderItemEntity : orderItemEntites) {
                 orderItemEntity.setOrderId(orderId);
+                System.out.println("----------------> orderItemEntity Id: " + orderItemEntity.getOrderId());
                 boolean result = orderItemDAO.save(orderItemEntity);
             }
-          
-        return rs;
+            
+            return true;
     }
     
 }
