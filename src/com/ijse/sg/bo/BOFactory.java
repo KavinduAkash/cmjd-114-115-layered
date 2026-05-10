@@ -6,6 +6,7 @@ package com.ijse.sg.bo;
 
 import com.ijse.sg.bo.custom.impl.ItemBOImpl;
 import com.ijse.sg.bo.custom.impl.CustomerBOImpl;
+import com.ijse.sg.bo.custom.impl.OrderBOImpl;
 import com.ijse.sg.dao.DAOFactory;
 import com.ijse.sg.dao.SuperDAO;
 import com.ijse.sg.dao.custom.impl.CustomerDAOImpl;
@@ -22,7 +23,7 @@ public class BOFactory {
     }
     
     public static enum BOTypes {
-        CUSTOMER, ITEM // ORDER, ORDER_ITEM
+        CUSTOMER, ITEM, ORDER //ORDER_ITEM
     }
     
     public static BOFactory getInstance() {
@@ -36,6 +37,9 @@ public class BOFactory {
                 
             case BOTypes.ITEM:  
                 return new ItemBOImpl();
+            
+            case BOTypes.ORDER:  
+                return new OrderBOImpl();    
                 
             default:
                 return null;
