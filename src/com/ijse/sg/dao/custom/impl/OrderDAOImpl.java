@@ -4,12 +4,18 @@
  */
 package com.ijse.sg.dao.custom.impl;
 
+import com.ijse.sg.dao.DAOFactory;
 import com.ijse.sg.dao.custom.OrderDAO;
+import com.ijse.sg.dao.custom.OrderItemDAO;
 import com.ijse.sg.db.DBConnection;
+import com.ijse.sg.dto.OrderDTO;
+import com.ijse.sg.dto.OrderItemDTO;
 import com.ijse.sg.entity.OrderEntity;
+import com.ijse.sg.entity.OrderItemEntity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,8 +24,10 @@ import java.util.List;
  */
 public class OrderDAOImpl implements OrderDAO {
 
+    OrderItemDAO orderItemDAO = (OrderItemDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER_ITEM);
+    
     @Override
-    public boolean save(OrderEntity entity) throws Exception {
+    public boolean save(OrderEntity entity, List<OrderItemEntity> orderItemEntites) throws Exception {
         Connection conn = null;
         boolean rs = false;
         
@@ -33,7 +41,7 @@ public class OrderDAOImpl implements OrderDAO {
            
             PreparedStatement stm = conn.prepareStatement(sql);
                 
-            stm.setInt(1, order.getCustomerId());
+            stm.setInt(1, entity.getCustomerId());
                 
             int result1 = stm.executeUpdate();
                 
@@ -43,8 +51,7 @@ public class OrderDAOImpl implements OrderDAO {
 
                 while(result2.next()) {
                     int orderId = result2.getInt("id");
-                    order.setOrderId(orderId);
-                    rs = this.placeOrderItems(order);
+                    rs = this.placeOrderItems(orderItemEntites, orderId);
                     if(rs) {
                         conn.commit();
                     }
@@ -73,6 +80,17 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<OrderEntity> getAll() throws Exception {
         return null;
+    }
+    
+    private boolean placeOrderItems(List<OrderItemEntity> orderItemEntites, int orderId) throws Exception {
+            boolean rs = false;
+        
+            for (OrderItemEntity orderItemEntity : orderItemEntites) {
+                orderItemEntity.setOrderId(orderId);
+                boolean result = orderItemDAO.save(orderItemEntity);
+            }
+          
+        return rs;
     }
     
 }

@@ -4,6 +4,8 @@
  */
 package com.ijse.sg.controller;
 
+import com.ijse.sg.bo.BOFactory;
+import com.ijse.sg.bo.custom.OrderBO;
 import com.ijse.sg.db.DBConnection;
 import com.ijse.sg.dto.OrderDTO;
 import com.ijse.sg.dto.OrderItemDTO;
@@ -19,35 +21,10 @@ import java.sql.Statement;
  */
 public class OrderController {
     
-    public boolean placeOrder(OrderDTO order) throws Exception {
-        
-    }
+    OrderBO orderBO = (OrderBO)BOFactory.getInstance().getBO(BOFactory.BOTypes.ORDER);
     
-    public boolean placeOrderItems(OrderDTO order) throws Exception {
-            boolean rs = false;
-        
-            Connection conn = DBConnection.getInstance().getConnection();
-           
-            for (OrderItemDTO orderItemDTO : order.getOrderItemList()) {
-             
-                String sql = "INSERT INTO order_items(order_id, item_id, unit_price, qty, total_price) VALUES (?, ?, ?, ?, ?)";
-           
-                PreparedStatement stm = conn.prepareStatement(sql);
-                
-                stm.setInt(1, order.getOrderId());
-                stm.setInt(2, orderItemDTO.getItemId());
-                stm.setDouble(3, orderItemDTO.getUnitPrice());
-                stm.setInt(4, orderItemDTO.getQty());
-                stm.setDouble(5, orderItemDTO.getUnitPrice()*orderItemDTO.getQty());
-
-                int result = stm.executeUpdate(); 
-                
-                if(result <= 0) {
-                    throw new SQLException();
-                }
-            }
-          
-        return rs;
+    public boolean placeOrder(OrderDTO order) throws Exception {
+        orderBO.placeOrder(order);
     }
     
 }

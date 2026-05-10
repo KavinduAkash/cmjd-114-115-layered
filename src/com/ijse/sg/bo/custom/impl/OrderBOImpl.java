@@ -5,7 +5,10 @@
 package com.ijse.sg.bo.custom.impl;
 
 import com.ijse.sg.bo.custom.OrderBO;
+import com.ijse.sg.dao.DAOFactory;
+import com.ijse.sg.dao.custom.OrderDAO;
 import com.ijse.sg.dto.OrderDTO;
+import com.ijse.sg.entity.OrderEntity;
 
 /**
  *
@@ -13,9 +16,16 @@ import com.ijse.sg.dto.OrderDTO;
  */
 public class OrderBOImpl implements OrderBO {
 
+    OrderDAO orderDAO = (OrderDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER);
+    
     @Override
     public boolean placeOrder(OrderDTO orderDTO) throws Exception {
         
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setCustomerId(orderDTO.getCustomerId());
+        
+        orderDAO.save(orderEntity);
+
     }
     
 }
