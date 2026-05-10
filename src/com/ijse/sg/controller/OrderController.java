@@ -24,7 +24,8 @@ public class OrderController {
     OrderBO orderBO = (OrderBO)BOFactory.getInstance().getBO(BOFactory.BOTypes.ORDER);
     
     public boolean placeOrder(OrderDTO order) throws Exception {
-        orderBO.placeOrder(order);
+        boolean result = orderBO.placeOrder(order);
+        return result;
     }
     
 }

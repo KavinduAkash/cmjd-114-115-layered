@@ -45,8 +45,10 @@ public class OrderBOImpl implements OrderBO {
             
         }
         
-        orderDAO.save(orderEntity, orderItemEntities);
-
+        boolean result = orderDAO.save(orderEntity, orderItemEntities);
+        
+        return result;
+        
     }
     
 }
