@@ -92,12 +92,9 @@ public class OrderDAOImpl implements OrderDAO {
     }
     
     private boolean placeOrderItems(List<OrderItemEntity> orderItemEntites, int orderId) throws Exception {
-            
-            System.out.println("----------------> orderItemEntites list: " + orderItemEntites.size());
         
             for (OrderItemEntity orderItemEntity : orderItemEntites) {
                 orderItemEntity.setOrderId(orderId);
-                System.out.println("----------------> orderItemEntity Id: " + orderItemEntity.getOrderId());
                 boolean result = orderItemDAO.save(orderItemEntity);
             }
             

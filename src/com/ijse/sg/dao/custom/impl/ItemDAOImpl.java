@@ -38,7 +38,7 @@ public class ItemDAOImpl implements ItemDAO {
                 stm.setInt(3, entity.getQty());
                 stm.setDouble(4, entity.getUnitPrice());
                 
-                int result = stm.executeUpdate();
+            int result = stm.executeUpdate();
                 
                 rs = result > 0;
             }

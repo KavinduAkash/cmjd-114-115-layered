@@ -334,6 +334,7 @@ public class ItemPanel extends javax.swing.JPanel {
                 model.addRow(new_row);
             }
         } catch(Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Something went wrong!", "Error", JOptionPane.ERROR_MESSAGE);
         }
        
