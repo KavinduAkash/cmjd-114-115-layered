@@ -6,6 +6,7 @@ package com.ijse.sg.dao;
 
 import com.ijse.sg.dao.custom.impl.ItemDAOImpl;
 import com.ijse.sg.dao.custom.impl.CustomerDAOImpl;
+import com.ijse.sg.dao.custom.impl.OrderDAOImpl;
 
 /**
  *
@@ -19,7 +20,7 @@ public class DAOFactory {
     }
     
     public static enum DAOTypes {
-        CUSTOMER, ITEM // ORDER, ORDER_ITEM
+        CUSTOMER, ITEM, ORDER // ORDER_ITEM
     }
     
     public static DAOFactory getInstance() {
@@ -33,6 +34,9 @@ public class DAOFactory {
                 
             case DAOTypes.ITEM:  
                 return new ItemDAOImpl();
+            
+            case DAOTypes.ORDER:  
+                return new OrderDAOImpl();
                 
             default:
                 return null;
