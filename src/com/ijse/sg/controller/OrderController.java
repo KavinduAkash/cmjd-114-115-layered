@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 /**
  *
@@ -26,6 +27,10 @@ public class OrderController {
     public boolean placeOrder(OrderDTO order) throws Exception {
         boolean result = orderBO.placeOrder(order);
         return result;
+    }
+    
+    public void filterOrderCustomers(Date startDate, Date endDate) throws Exception {
+        orderBO.filterOrderCustomers(startDate, endDate);
     }
     
 }

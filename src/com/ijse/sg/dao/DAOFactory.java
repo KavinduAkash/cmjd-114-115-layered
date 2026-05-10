@@ -8,6 +8,7 @@ import com.ijse.sg.dao.custom.impl.ItemDAOImpl;
 import com.ijse.sg.dao.custom.impl.CustomerDAOImpl;
 import com.ijse.sg.dao.custom.impl.OrderDAOImpl;
 import com.ijse.sg.dao.custom.impl.OrderItemDAOImpl;
+import com.ijse.sg.dao.custom.impl.QueryDAOImpl;
 
 /**
  *
@@ -21,7 +22,7 @@ public class DAOFactory {
     }
     
     public static enum DAOTypes {
-        CUSTOMER, ITEM, ORDER, ORDER_ITEM
+        CUSTOMER, ITEM, ORDER, ORDER_ITEM, QUERY
     }
     
     public static DAOFactory getInstance() {
@@ -41,6 +42,9 @@ public class DAOFactory {
                 
             case DAOTypes.ORDER_ITEM:  
                 return new OrderItemDAOImpl();
+            
+            case DAOTypes.QUERY:  
+                return new QueryDAOImpl();
                 
             default:
                 return null;

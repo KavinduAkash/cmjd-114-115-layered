@@ -7,11 +7,15 @@ package com.ijse.sg.bo.custom.impl;
 import com.ijse.sg.bo.custom.OrderBO;
 import com.ijse.sg.dao.DAOFactory;
 import com.ijse.sg.dao.custom.OrderDAO;
+import com.ijse.sg.dao.custom.QueryDAO;
 import com.ijse.sg.dto.OrderDTO;
+import com.ijse.sg.dto.CustomDTO;
 import com.ijse.sg.dto.OrderItemDTO;
+import com.ijse.sg.entity.CustomEntity;
 import com.ijse.sg.entity.OrderEntity;
 import com.ijse.sg.entity.OrderItemEntity;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +25,7 @@ import java.util.List;
 public class OrderBOImpl implements OrderBO {
 
     OrderDAO orderDAO = (OrderDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER);
+    QueryDAO queryDAO = (QueryDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUERY);
     
     @Override
     public boolean placeOrder(OrderDTO orderDTO) throws Exception {
@@ -50,5 +55,22 @@ public class OrderBOImpl implements OrderBO {
         return result;
         
     }
+
+    @Override
+    public List<CustomDTO> filterOrderCustomers(Date startDate, Date endDate) throws Exception {
+    
+        List<CustomEntity> customEntityList = queryDAO.filterOrderCustomers(startDate, endDate);
+        
+        List<CustomDTO> customDTOList = new ArrayList<>();
+        
+        for (CustomEntity customEntity : customEntityList) {
+            CustomDTO dto = new CustomDTO(customEntity.getCustomerId(), customEntity.getCustomerName(), customEntity.getOrderCount());
+            customDTOList.add(dto);
+        }
+        
+        return customDTOList;
+    }
+    
+    
     
 }
