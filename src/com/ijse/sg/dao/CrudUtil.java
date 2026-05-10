@@ -8,6 +8,7 @@ import com.ijse.sg.db.DBConnection;
 import com.ijse.sg.entity.CustomerEntity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.sql.SQLException;
 /**
@@ -36,6 +37,28 @@ public class CrudUtil {
         }
         
         return false;
+    }
+    
+    public static ResultSet executeQuery(String sql, Object...values) throws SQLException {
+        Connection conn = DBConnection.getInstance().getConnection();
+        
+        if(conn!=null) {
+        
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            
+            int i = 0;
+            for (Object value : values) {
+                ++i;
+                pstm.setObject(i, value);
+            }
+            
+            ResultSet result = pstm.executeQuery();
+            
+            return result;
+
+        }
+        
+        return null;
     }
     
 }

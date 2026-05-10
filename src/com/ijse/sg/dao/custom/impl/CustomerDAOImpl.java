@@ -63,17 +63,9 @@ public class CustomerDAOImpl implements CustomerDAO {
             
             List<CustomerEntity> entities = new ArrayList<>();
             
-            Connection conn = DBConnection.getInstance().getConnection();
+            ResultSet result = CrudUtil.executeQuery("SELECT * FROM customers");
             
-            if(conn!=null) {
-                
-                String sql = "SELECT * FROM customers";
-                
-                Statement stm = conn.createStatement();
-                
-                ResultSet result = stm.executeQuery(sql);
-            
-                while(result.next()) {
+            while(result.next()) {
                     int id = result.getInt("id");
                     String name = result.getString("name");
                     String email = result.getString("email");
@@ -81,7 +73,6 @@ public class CustomerDAOImpl implements CustomerDAO {
                     
                     CustomerEntity entity = new CustomerEntity(id, name, email, address);
                     entities.add(entity);
-                }
             }
         
             return entities;
