@@ -6,11 +6,13 @@ package com.ijse.sg.dao.custom;
 
 import com.ijse.sg.dao.CrudDAO;
 import com.ijse.sg.entity.OrderEntity;
+import com.ijse.sg.entity.OrderItemEntity;
+import java.util.List;
 
 /**
  *
  * @author kavinduakash
  */
 public interface OrderDAO extends CrudDAO<OrderEntity> {
-    
+    public boolean save(OrderEntity entity, List<OrderItemEntity> orderItemEntites) throws Exception;
 }

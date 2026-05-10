@@ -25,11 +25,11 @@ public class OrderItemDAOImpl implements OrderItemDAO {
            
         PreparedStatement stm = conn.prepareStatement(sql);
                 
-        stm.setInt(1, order.getOrderId());
-        stm.setInt(2, orderItemDTO.getItemId());
-        stm.setDouble(3, orderItemDTO.getUnitPrice());
-        stm.setInt(4, orderItemDTO.getQty());
-        stm.setDouble(5, orderItemDTO.getUnitPrice()*orderItemDTO.getQty());
+        stm.setInt(1, entity.getOrderId());
+        stm.setInt(2, entity.getOrderItemId());
+        stm.setDouble(3, entity.getUnitPrice());
+        stm.setInt(4, entity.getQty());
+        stm.setDouble(5, entity.getTotalPrice());
 
         int result = stm.executeUpdate(); 
                 
@@ -52,7 +52,7 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 
     @Override
     public List<OrderItemEntity> getAll() throws Exception {
-        return true;
+        return null;
     }
     
 }

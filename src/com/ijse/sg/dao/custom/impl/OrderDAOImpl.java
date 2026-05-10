@@ -25,6 +25,11 @@ import java.util.List;
 public class OrderDAOImpl implements OrderDAO {
 
     OrderItemDAO orderItemDAO = (OrderItemDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER_ITEM);
+
+    @Override
+    public boolean save(OrderEntity entity) throws Exception {
+        return false;
+    }
     
     @Override
     public boolean save(OrderEntity entity, List<OrderItemEntity> orderItemEntites) throws Exception {
