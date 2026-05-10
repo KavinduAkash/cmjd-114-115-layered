@@ -8,7 +8,11 @@ import com.ijse.sg.bo.custom.OrderBO;
 import com.ijse.sg.dao.DAOFactory;
 import com.ijse.sg.dao.custom.OrderDAO;
 import com.ijse.sg.dto.OrderDTO;
+import com.ijse.sg.dto.OrderItemDTO;
 import com.ijse.sg.entity.OrderEntity;
+import com.ijse.sg.entity.OrderItemEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -24,7 +28,24 @@ public class OrderBOImpl implements OrderBO {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setCustomerId(orderDTO.getCustomerId());
         
-        orderDAO.save(orderEntity);
+        List<OrderItemDTO> orderItemDTOList =  orderDTO.getOrderItemList();
+        
+        List<OrderItemEntity> orderItemEntities = new ArrayList<>();
+        
+        for(OrderItemDTO orderItemDTO : orderItemDTOList) {
+            
+            OrderItemEntity orderItemEntity = new OrderItemEntity();
+            
+            orderItemEntity.setOrderItemId(orderItemDTO.getItemId());
+            orderItemEntity.setQty(orderItemDTO.getQty());
+            orderItemEntity.setUnitPrice(orderItemDTO.getUnitPrice());
+            orderItemEntity.setTotalPrice(orderItemDTO.getQty()*orderItemDTO.getUnitPrice());
+            
+            orderItemEntities.add(orderItemEntity);
+            
+        }
+        
+        orderDAO.save(orderEntity, orderItemEntities);
 
     }
     
